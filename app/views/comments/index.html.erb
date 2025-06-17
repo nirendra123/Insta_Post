@@ -1,0 +1,11 @@
+
+<h1 class="text-2xl mb-4 font-bold">Comment</h1>
+  <%= simple_form_for Comment.new do |f| %>
+  <%= f.input :description %>
+  <%= f.submit 'Comment' %>
+<% end %>
+
+
+ <% @comments.each do |comment| %>
+       <h3><%= comment.description%></h3>
+      <% end %>

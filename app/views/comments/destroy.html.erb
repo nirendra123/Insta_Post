@@ -1,0 +1,6 @@
+<% post.comments.each do |comment| %>
+  <div class="px-2">
+    <p class="mb-3"><%= comment.text %></p>
+    <%= button_to 'Delete', post_comment_path(post, comment), method: :delete, class: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800' %>
+  </div>
+<% end %>

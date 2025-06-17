@@ -1,0 +1,7 @@
+<%= @user.email.split('@').first %>
+
+<%= pluralize(@user.posts.count, 'post') %>
+<% @user.posts.each do |post| %>
+<%= image_tag url_for(post.photo) if post.photo.attached? %>
+
+<% end %>

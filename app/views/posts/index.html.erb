@@ -1,0 +1,71 @@
+<div class="max-w-3xl mx-auto px-4">
+  <% @posts.each do |post| %>
+    <div class="bg-white  ring-sky-200 rounded-lg p-6 mb-10 w-full  border-1 border-blue-300">
+      <!-- User info -->
+      <div class="flex items-center space-x-4 mb-4">
+      
+        <% if post.user.photo.attached? %>
+          <%= image_tag post.user.photo, class: "w-12 h-12 rounded-full object-cover" %>
+        <% else %>
+          <div class="w-12 h-12 rounded-full bg-gray-300"></div>
+        <% end %>
+        <div class="font-bold text-xl">
+        <%= link_to user_name(post.user_email), user_path(post.user_id) %>
+        </div>
+
+      </div>
+
+      <!-- Post image -->
+      <div class="mb-6">
+        <%= image_tag post.photo, class: "w-full rounded-lg aspect-[16/9]" %>
+      </div>
+
+     <!-- Like button & count -->
+     <%= render partial: 'likes', locals: { post: post } %>
+
+
+      <!-- Post description -->
+      <p class="mb-4 text-black-900 text-xl font-bold"><%= post.description %></p>
+
+      <% if post.user == current_user %>
+        <div class="flex space-x-4 mb-6">
+          <%= link_to 'Edit Post', edit_post_path(post.id), class: 'px-4 py-2 bg-[#3674B5] text-white rounded-full hover:bg-blue-700' %>
+          <%= link_to 'Delete Post', post_path(post.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'px-4 py-2 bg-[#FF6363] text-white rounded-full hover:bg-red-700' %>
+        </div>
+      <% end %>
+      <!-- Comments -->
+      <div class="mb-6 border-t border-gray-200 pt-4 pl-4">
+        <h4 class="font-semibold mb-2">Comments :</h4>
+        <% post.comments.each do |comment| %>
+          <div class="mb-3 p-3 bg-gray-100 rounded flex justify-between  ">
+             <div>
+            <%=  link_to user_name(comment.user_email), user_path(comment.user_id) ,class: "font-semibold text-blue-600 hover:underline" %>:
+            <span class="ml-2"><%= comment.description %></span>
+            </div>
+            <div>
+               <% if current_user == comment.user %>
+         <%= link_to 'Delete', post_comment_path(post, comment), method: :delete,
+          data: { confirm: 'Are you sure?' },
+          class: 'cursor-pointer text-sm px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700' %>
+            </div>
+    <% end %>
+          </div>
+
+        
+        <% end %>
+      </div>
+
+      <!-- Comment form -->
+      <div class="pl-4">
+        <%= simple_form_for Comment.new, url: post_comments_path(post), method: :post do |f| %>
+          <div class=" flex items-center space-x-1 flex-col w-full">
+          <div class="w-full">
+            <%= f.input :description, label: false, placeholder: 'Add a comment...', input_html: { class: " w-full flex-grow border border-gray-300 rounded px-3 py-2 focus:outline-none  resize-none " } %>
+          </div>
+            <%= f.submit 'Comment', class: 'px-4 py-2 bg-[#3674B5] text-white rounded-full hover:bg-blue-700 ml-auto  ' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,3 @@
+module Posts::UpvotesPathHelper
+    
+end
