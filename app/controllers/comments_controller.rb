@@ -1,12 +1,12 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
-  before_action :authenticate_user, only: [:create]
+  before_action :authenticate_user, only: [ :create ]
 
 
   # GET /comments or /comments.json
   def index
-   @posts = Post.all.order('created_at DESC')
-   @comments = Comment.all.order('created_at DESC')
+   @posts = Post.all.order("created_at DESC")
+   @comments = Comment.all.order("created_at DESC")
   end
 
   # GET /comments/1 or /comments/1.json
@@ -24,10 +24,9 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(comment_params.merge(user_id: current_user.id))
-    # @comment.user = current_user
+      # @comment.user = current_user
       if @comment.save
        flash[:notice] = "Comment posted successfully."
       redirect_to root_path
@@ -52,7 +51,6 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
-    
     @comment.destroy!
     redirect_to root_path
   end
@@ -67,5 +65,4 @@ class CommentsController < ApplicationController
     def comment_params
      params.require(:comment).permit(:description, :post_id)
     end
-      
 end

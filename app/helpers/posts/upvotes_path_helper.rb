@@ -1,3 +1,2 @@
 module Posts::UpvotesPathHelper
-    
 end

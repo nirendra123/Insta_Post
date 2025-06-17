@@ -7,7 +7,7 @@ class Posts::DownvotesController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "post_#{@post.id}_container",
-          partial: 'posts/likes',
+          partial: "posts/likes",
           locals: { post: @post }
         )
       end

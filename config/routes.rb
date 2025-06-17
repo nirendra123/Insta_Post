@@ -7,20 +7,20 @@ Rails.application.routes.draw do
   get "sessions/destroy"
   resources :users
   get "home/index"
-  resources :sessions, only: [:new, :create, :destroy]
-  get 'signup', to: 'users#new', as: 'signup'
-  get 'login', to: 'sessions#new', as: 'login'
-  delete 'logout', to: 'sessions#destroy', as: 'logout'
+  resources :sessions, only: [ :new, :create, :destroy ]
+  get "signup", to: "users#new", as: "signup"
+  get "login", to: "sessions#new", as: "login"
+  delete "logout", to: "sessions#destroy", as: "logout"
 
   resources :posts
 
   resources :posts do
      resources :comments
-    resources :comments, only: [:create, :destroy]
-    resources :upvotes, only: :create, controller: 'posts/upvotes'
-    resources :downvotes, only: :create,controller: 'posts/downvotes'
+    resources :comments, only: [ :create, :destroy ]
+    resources :upvotes, only: :create, controller: "posts/upvotes"
+    resources :downvotes, only: :create, controller: "posts/downvotes"
   end
-  
+
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

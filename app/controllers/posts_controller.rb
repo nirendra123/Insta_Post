@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
-before_action :is_owner?,only: [:edit,:update, :destroy]
-before_action :authenticate_user, only: [:new, :create]
+before_action :is_owner?, only: [ :edit, :update, :destroy ]
+before_action :authenticate_user, only: [ :new, :create ]
 def create
 #   @post = Post.find(params[:id])
 #   @post.create(post_params)
@@ -14,12 +14,12 @@ def create
   end
 end
 
-def new 
+def new
     @post = Post.new
 end
 
 def index
-  @posts = Post.all.order('created_at Desc').includes(:user, :comments, :user)
+  @posts = Post.all.order("created_at Desc").includes(:user, :comments, :user)
 end
 
 def edit
@@ -32,9 +32,8 @@ def update
     if @post.valid?
         redirect_to root_path
     else
-     render:edit, status: :unprocessable_entity
+     render :edit, status: :unprocessable_entity
     end
-
 end
 
 def destroy
@@ -53,7 +52,6 @@ private
 
 def post_params
   params.require(:post).permit(:photo, :description)
-
 end
 
 def is_owner?
